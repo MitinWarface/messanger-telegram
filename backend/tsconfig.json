@@ -31,7 +31,8 @@
       "@utils/*": ["src/utils/*"],
       "@config/*": ["src/config/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node"]
   },
   "include": [
     "src/**/*"

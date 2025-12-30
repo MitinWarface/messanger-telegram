@@ -61,10 +61,21 @@ setupChatRoutes(app);
 // Serve static files from uploads directory
 app.use('/api/uploads', express.static(process.env.UPLOADS_PATH || '/data/uploads'));
 
-// Routes will be added here
-app.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Telegram Clone API Server' });
-});
+// Serve frontend static files in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendDistPath = path.join(__dirname, '../../dist/frontend');
+  app.use(express.static(frontendDistPath));
+  
+  // Serve index.html for all other routes to support client-side routing
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+} else {
+  // Routes will be added here
+  app.get('/', (req: Request, res: Response) => {
+    res.json({ message: 'Telegram Clone API Server' });
+  });
+}
 
 // Setup Socket.IO handlers
 const chatHandlers = new ChatSocketHandlers(io);

@@ -19,13 +19,15 @@ builder = "NIXPACKS"
     ALLOWED_TYPES = "image/*,video/*,application/pdf"
     
     # Фронтенд
-    VITE_API_URL = "https://api.ваш-домен.railway.app"
-    VITE_WS_URL = "wss://api.ваш-домен.railway.app"
+    VITE_API_URL = "{{DEPLOYMENT_URL}}"
+    VITE_WS_URL = "{{DEPLOYMENT_URL}}"
+    VITE_BASE_URL = "{{DEPLOYMENT_URL}}"
 
 [services.backend]
 name = "backend"
 root = "./backend"
-startCommand = "node dist/server.js"
+buildCommand = "npm install && npm run build"
+startCommand = "npm start"
 healthCheckPath = "/health"
 
 [[services.backend.volumes]]
@@ -34,13 +36,4 @@ mountPath = "/data/uploads"
 
 [services.backend.ports]
 - port = 3000
-  httpPath = "/"
-
-[services.frontend]
-name = "frontend" 
-root = "./frontend"
-startCommand = "npm run preview"
-
-[services.frontend.ports]
-- port = 4173
   httpPath = "/"

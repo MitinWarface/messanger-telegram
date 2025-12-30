@@ -24,8 +24,15 @@ export default defineConfig({
       },
     },
   },
-  build: {
+ build: {
     outDir: '../dist/frontend',
     emptyOutDir: true,
- },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router'],
+        }
+      }
+    }
+  },
 });
