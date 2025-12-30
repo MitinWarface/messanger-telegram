@@ -33,7 +33,7 @@ RUN npm run build
 WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
-RUN npm ci --no-audit --no-fund --ignore-scripts --build-from-source
+RUN npm ci --no-audit --no-fund --ignore-scripts
 
 # Копируем исходные файлы frontend перед сборкой
 COPY frontend/tsconfig.json ./
