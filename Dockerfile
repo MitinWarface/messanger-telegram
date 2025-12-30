@@ -39,9 +39,9 @@ RUN npm ci --no-audit --no-fund --ignore-scripts
 COPY frontend/tsconfig.json ./
 COPY frontend/vite.config.ts ./
 COPY frontend/src ./src
-COPY frontend/index.html ./
 
 # Копируем файлы с правильной разметкой
+COPY frontend/index.html ./
 COPY frontend/src/assets/css/tailwind.css ./src/assets/css/
 
 # Исправляем проблему с разметкой в ChatView.vue
