@@ -1,0 +1,46 @@
+[build]
+builder = "NIXPACKS"
+
+[environments]
+  [environments.production]
+    # Бэкенд
+    PORT = "3000"
+    JWT_SECRET = "{{#randomString 64}}{{/randomString}}"
+    NODE_ENV = "production"
+    
+    # SMSC.RU
+    SMSC_LOGIN = "{{must_env SMSC_LOGIN}}"
+    SMSC_PASSWORD = "{{must_env SMSC_PASSWORD}}"
+    SMSC_SENDER = "TelegramApp"
+    
+    # Хранилище
+    UPLOADS_PATH = "/data/uploads"
+    MAX_FILE_SIZE = "104857600"
+    ALLOWED_TYPES = "image/*,video/*,application/pdf"
+    
+    # Фронтенд
+    VITE_API_URL = "https://api.ваш-домен.railway.app"
+    VITE_WS_URL = "wss://api.ваш-домен.railway.app"
+
+[services.backend]
+name = "backend"
+root = "./backend"
+startCommand = "node dist/server.js"
+healthCheckPath = "/health"
+
+[[services.backend.volumes]]
+name = "uploads-volume"
+mountPath = "/data/uploads"
+
+[services.backend.ports]
+- port = 3000
+  httpPath = "/"
+
+[services.frontend]
+name = "frontend" 
+root = "./frontend"
+startCommand = "npm run preview"
+
+[services.frontend.ports]
+- port = 4173
+  httpPath = "/"
