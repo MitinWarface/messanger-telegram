@@ -4,40 +4,39 @@ FROM node:18-alpine
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и package-lock.json (если есть) в рабочую директорию
-COPY package.json package-lock.json ./
+# Копируем корневой package.json если он существует
+COPY package.json ./
 
-# Устанавливаем зависимости
-RUN npm ci --only=production
+# Устанавливаем зависимости для корня (если они есть), игнорируем ошибки если package-lock.json отсутствует
+RUN npm ci --only=production --no-audit --no-fund || echo "No root dependencies to install"
 
-# Копируем остальные файлы проекта в рабочую директорию
+# Копируем остальные файлы проекта
 COPY . .
 
-# Переходим в директорию backend и устанавливаем зависимости backend
+# Устанавливаем зависимости для backend и собираем его
 WORKDIR /app/backend
-COPY backend/package.json backend/package-lock.json ./
-
-# Устанавливаем зависимости backend
-RUN npm ci
+COPY backend/package.json ./
+COPY backend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
 
 # Устанавливаем TypeScript глобально для компиляции
 RUN npm install -g typescript
 
-# Копируем исходный код backend
+# Копируем исходный код backend и tsconfig
 COPY backend/src ./src
-COPY backend/tsconfig.json .
+COPY backend/tsconfig.json ./
 
-# Компилируем TypeScript
+# Компилируем TypeScript backend
 RUN npm run build
 
 # Устанавливаем зависимости для frontend и собираем его
+WORKDIR /app/frontend
+COPY frontend/package.json ./
+COPY frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund && npm run build
+
+# Возвращаемся в корневую директорию
 WORKDIR /app
 
-# Сборка фронтенда
-RUN cd frontend && npm ci && npm run build
-
-# Устанавливаем все зависимости для продакшена
-RUN npm ci --production
-
 # Указываем команду запуска
-CMD ["npm", "start"]
+CMD ["sh", "-c", "cd backend && npm start"]
