@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-10">
+  <div class="h-screen flex bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <!-- Sidebar -->
     <div class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
       <!-- Admin Header -->
@@ -19,11 +19,11 @@
       <div class="p-3">
         <nav class="space-y-1">
           <button
-            @click="activeTab = 'dashboard'"
+            @click="setActiveTab('dashboard')"
             :class="[
               'w-full text-left px-3 py-2 rounded-lg flex items-center space-x-2',
-              activeTab === 'dashboard' 
-                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' 
+              activeTab === 'dashboard'
+                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700'
             ]"
           >
@@ -34,11 +34,11 @@
           </button>
           
           <button
-            @click="activeTab = 'users'"
+            @click="setActiveTab('users')"
             :class="[
               'w-full text-left px-3 py-2 rounded-lg flex items-center space-x-2',
-              activeTab === 'users' 
-                ? 'bg-blue-100 dark:bg-blue-90/50 text-blue-700 dark:text-blue-300' 
+              activeTab === 'users'
+                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700'
             ]"
           >
@@ -49,11 +49,11 @@
           </button>
           
           <button
-            @click="activeTab = 'chats'"
+            @click="setActiveTab('chats')"
             :class="[
               'w-full text-left px-3 py-2 rounded-lg flex items-center space-x-2',
-              activeTab === 'chats' 
-                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' 
+              activeTab === 'chats'
+                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700'
             ]"
           >
@@ -64,11 +64,11 @@
           </button>
           
           <button
-            @click="activeTab = 'messages'"
+            @click="setActiveTab('messages')"
             :class="[
               'w-full text-left px-3 py-2 rounded-lg flex items-center space-x-2',
-              activeTab === 'messages' 
-                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300' 
+              activeTab === 'messages'
+                ? 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700'
             ]"
           >
@@ -113,7 +113,7 @@
 
       <!-- Bottom Menu -->
       <div class="mt-auto p-3 border-t border-gray-200 dark:border-gray-700">
-        <button @click="logout" class="w-full p-2 rounded-lg bg-red-500 hover:bg-red-60 text-white flex items-center justify-center space-x-2">
+        <button @click="logout" class="w-full p-2 rounded-lg bg-red-500 hover:bg-red-600 text-white flex items-center justify-center space-x-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
@@ -142,6 +142,7 @@
                 <p class="text-2xl font-bold">{{ stats.users.total }}</p>
               </div>
             </div>
+          </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow">
             <div class="flex items-center">
@@ -224,7 +225,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                      <span class="text-sm font-medium text-gray-70 dark:text-gray-200">
+                      <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
                         {{ user.first_name?.charAt(0) || user.phone_number?.charAt(0) || '?' }}
                       </span>
                     </div>
@@ -250,14 +251,14 @@
                   <button 
                     v-if="!user.is_banned"
                     @click="banUser(user.id)"
-                    class="text-red-600 hover:text-red-90 dark:text-red-400 dark:hover:text-red-300 mr-3"
+                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 mr-3"
                   >
                     Заблокировать
                   </button>
                   <button 
                     v-else
                     @click="unbanUser(user.id)"
-                    class="text-green-600 hover:text-green-900 dark:text-green-40 dark:hover:text-green-300 mr-3"
+                    class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 mr-3"
                   >
                     Разблокировать
                   </button>
@@ -276,14 +277,14 @@
         <h1 class="text-2xl font-bold mb-6">Управление чатами</h1>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div 
-            v-for="chat in chats" 
+          <div
+            v-for="chat in chats"
             :key="chat.id"
             class="bg-white dark:bg-gray-800 rounded-xl shadow p-4"
           >
             <div class="flex items-center mb-3">
               <div class="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                <span class="text-lg font-semibold text-gray-70 dark:text-gray-200">
+                <span class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                   {{ chat.title?.charAt(0) || 'C' }}
                 </span>
               </div>
@@ -291,6 +292,7 @@
                 <h3 class="font-medium">{{ chat.title || 'Без названия' }}</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ chat.type }}</p>
               </div>
+            </div>
             <div class="mt-4">
               <p class="text-sm text-gray-500 dark:text-gray-400">Участников: {{ chat.users?.length || 0 }}</p>
               <p class="text-sm text-gray-500 dark:text-gray-400">Создан: {{ new Date(chat.created_at).toLocaleDateString() }}</p>
@@ -299,7 +301,7 @@
               <button class="text-sm text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
                 Подробнее
               </button>
-              <button class="text-sm text-red-600 hover:text-red-900 dark:text-red-40 dark:hover:text-red-300">
+              <button class="text-sm text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
                 Удалить
               </button>
             </div>
@@ -312,11 +314,11 @@
         <h1 class="text-2xl font-bold mb-6">Сообщения</h1>
         
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
-          <table class="min-w-full divide-y divide-gray-20 dark:divide-gray-700">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Отправитель</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-30 uppercase tracking-wider">Сообщение</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Сообщение</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Чат</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Дата</th>
               </tr>
@@ -338,7 +340,7 @@
         <h1 class="text-2xl font-bold mb-6">SMS Логи</h1>
         
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
-          <table class="min-w-full divide-y divide-gray-20 dark:divide-gray-700">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-30 uppercase tracking-wider">Номер</th>
@@ -374,7 +376,7 @@
         <h1 class="text-2xl font-bold mb-6">Административные действия</h1>
         
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
-          <table class="min-w-full divide-y divide-gray-20 dark:divide-gray-700">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-30 uppercase tracking-wider">Админ</th>
@@ -410,7 +412,7 @@ interface User {
   first_name?: string;
   last_name?: string;
   is_banned: boolean;
- is_online: boolean;
+  is_online: boolean;
 }
 
 interface Chat {
@@ -418,7 +420,7 @@ interface Chat {
   title?: string;
   type: string;
   created_at: Date;
- users?: any[];
+  users?: any[];
 }
 
 interface Message {
@@ -460,10 +462,18 @@ interface AdminStats {
   };
 }
 
+// Define type for active tab to fix TypeScript errors
+type ActiveTab = 'dashboard' | 'users' | 'chats' | 'messages' | 'sms' | 'actions';
+
 const router = useRouter();
 const authStore = useAuthStore();
 
-const activeTab = ref('dashboard');
+const activeTab = ref<ActiveTab>('dashboard');
+
+// Method to set active tab to fix TypeScript errors
+const setActiveTab = (tab: ActiveTab) => {
+  activeTab.value = tab;
+};
 
 // Define reactive variables with proper types
 const stats = ref<AdminStats>({
