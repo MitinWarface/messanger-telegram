@@ -34,6 +34,6 @@ healthCheckPath = "/health"
 name = "uploads-volume"
 mountPath = "/data/uploads"
 
-[services.backend.ports]
+[[services.backend.ports]]
 - port = 3000
   httpPath = "/"
