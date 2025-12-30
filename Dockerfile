@@ -17,7 +17,7 @@ COPY . .
 WORKDIR /app/backend
 COPY backend/package.json ./
 COPY backend/package-lock.json ./
-RUN npm ci --no-audit --no-fund --ignore-scripts
+RUN npm ci --no-audit --no-fund --ignore-scripts --build-from-source
 
 # Устанавливаем TypeScript глобально для компиляции
 RUN npm install -g typescript
@@ -33,7 +33,7 @@ RUN npm run build
 WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
-RUN npm ci --no-audit --no-fund --ignore-scripts
+RUN npm ci --no-audit --no-fund --ignore-scripts --build-from-source
 
 # Копируем исходные файлы frontend перед сборкой
 COPY frontend/tsconfig.json ./
