@@ -33,7 +33,6 @@ RUN npm run build
 WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
-RUN ls -la && cat package.json && npm run build
 RUN npm ci --no-audit --no-fund --ignore-scripts
 
 # Копируем исходные файлы frontend перед сборкой
