@@ -17,7 +17,7 @@ COPY . .
 WORKDIR /app/backend
 COPY backend/package.json ./
 COPY backend/package-lock.json ./
-RUN npm ci --no-audit --no-fund --ignore-scripts --build-from-source
+RUN npm ci --no-audit --no-fund --ignore-scripts && npm install bcrypt --build-from-source
 
 # Устанавливаем TypeScript глобально для компиляции
 RUN npm install -g typescript
