@@ -7,8 +7,8 @@
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "build:frontend": "cd ../frontend && npm install && npm run build",
-    "postinstall": "npm run build:frontend",
+    "build:frontend": "cd ../frontend && npm run build",
+    "prepare": "npm run build:frontend",
     "heroku-postbuild": "npm run build:frontend && tsc"
   },
   "keywords": [
