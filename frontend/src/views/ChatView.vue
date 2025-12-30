@@ -125,6 +125,7 @@
               <p class="text-xs mt-1 opacity-70">{{ formatDate(message.created_at) }}</p>
             </div>
           </div>
+        </div>
         <div v-else class="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
           <p>Выберите чат для начала общения</p>
         </div>
