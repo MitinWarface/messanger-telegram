@@ -26,7 +26,7 @@ builder = "NIXPACKS"
 [services.backend]
 name = "backend"
 root = "./backend"
-buildCommand = "npm install --include=dev && npm run build"
+buildCommand = "npm install && npm run build"
 startCommand = "npm start"
 healthCheckPath = "/health"
 

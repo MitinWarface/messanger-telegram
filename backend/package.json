@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "build:frontend": "cd ../frontend && npm install && npm run build",
     "postinstall": "npm run build:frontend",
-    "heroku-postbuild": "npm run build:frontend && tsc"
+    "heroku-postbuild": "npm run build:frontend && npx tsc"
   },
   "keywords": [
     "telegram",
