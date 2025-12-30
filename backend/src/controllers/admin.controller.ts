@@ -14,7 +14,7 @@ export class AdminController {
   }
 
   // Get admin dashboard stats
-  async getDashboardStats(req: Request, res: Response) {
+ async getDashboardStats(req: Request, res: Response) {
     try {
       // Get user stats
       const totalUsers = await UserModel.findAll();
@@ -49,6 +49,7 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting dashboard stats:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -60,8 +61,9 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting users:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-  }
+ }
 
   // Get user by ID
   async getUserById(req: Request, res: Response) {
@@ -74,14 +76,16 @@ export class AdminController {
       }
       
       res.json(user);
+      return;
     } catch (error) {
       console.error('Error getting user:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
   // Ban user
- async banUser(req: Request, res: Response) {
+async banUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const adminUser = (req as any).user;
@@ -105,9 +109,11 @@ export class AdminController {
       );
       
       res.json({ message: 'User banned successfully', user: { ...user, is_banned: true } });
+      return;
     } catch (error) {
       console.error('Error banning user:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -135,10 +141,12 @@ export class AdminController {
         req.get('User-Agent')
       );
       
-      res.json({ message: 'User unbanned successfully', user: { ...user, is_banned: false });
+      res.json({ message: 'User unbanned successfully', user: { ...user, is_banned: false } });
+      return;
     } catch (error) {
       console.error('Error unbanning user:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -150,6 +158,7 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting chats:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -174,9 +183,11 @@ export class AdminController {
         users: chatUsers,
         messages,
       });
+      return;
     } catch (error) {
       console.error('Error getting chat:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -188,6 +199,7 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting messages:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -199,8 +211,9 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting SMS logs:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-  }
+ }
 
   // Get admin actions
   async getAdminActions(req: Request, res: Response) {
@@ -210,6 +223,7 @@ export class AdminController {
     } catch (error) {
       console.error('Error getting admin actions:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -235,9 +249,11 @@ export class AdminController {
       // In a real implementation, this would send the message to all users or specific target
       // For now, just return success
       res.json({ message: 'Broadcast message sent successfully' });
+      return;
     } catch (error) {
       console.error('Error sending broadcast message:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 }

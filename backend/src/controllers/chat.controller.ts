@@ -50,14 +50,16 @@ export class ChatController {
       }
 
       res.status(201).json(chat);
+      return;
     } catch (error) {
       console.error('Error creating chat:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
   // Get user's chats
-  async getUserChats(req: Request, res: Response) {
+ async getUserChats(req: Request, res: Response) {
     try {
       const user = (req as any).user;
 
@@ -66,11 +68,12 @@ export class ChatController {
     } catch (error) {
       console.error('Error getting user chats:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
   // Get chat by ID
-  async getChatById(req: Request, res: Response) {
+ async getChatById(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const user = (req as any).user;
@@ -93,9 +96,11 @@ export class ChatController {
         ...chat,
         users: chatUsers
       });
+      return;
     } catch (error) {
       console.error('Error getting chat:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -116,9 +121,11 @@ export class ChatController {
 
       const messages = await MessageModel.findByChatId(id, parseInt(limit as string), parseInt(offset as string));
       res.json(messages);
+      return;
     } catch (error) {
       console.error('Error getting chat messages:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -152,9 +159,11 @@ export class ChatController {
       );
 
       res.status(201).json(message);
+      return;
     } catch (error) {
       console.error('Error sending message:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -176,7 +185,7 @@ export class ChatController {
         chatId,
         user.id,
         req.body.content || '',
-        uploadResult.mimeType.startsWith('image/') ? 'image' : 
+        uploadResult.mimeType.startsWith('image/') ? 'image' :
         uploadResult.mimeType.startsWith('video/') ? 'video' : 'document',
         uploadResult.url,
         uploadResult.originalName,
@@ -185,9 +194,11 @@ export class ChatController {
       );
 
       res.status(201).json(message);
+      return;
     } catch (error) {
       console.error('Error sending message with file:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -214,9 +225,11 @@ export class ChatController {
 
       const updatedMessage = await MessageModel.updateContent(id, content);
       res.json(updatedMessage);
+      return;
     } catch (error) {
       console.error('Error updating message:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -245,14 +258,16 @@ export class ChatController {
 
       await MessageModel.deleteMessage(id);
       res.json({ message: 'Message deleted successfully' });
+      return;
     } catch (error) {
       console.error('Error deleting message:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
   // Add user to chat
-  async addUserToChat(req: Request, res: Response) {
+ async addUserToChat(req: Request, res: Response) {
     try {
       const { chatId, userId } = req.body;
       const user = (req as any).user;
@@ -272,9 +287,11 @@ export class ChatController {
       // Add user to chat
       await ChatModel.addUserToChat(chatId, userId, 'member');
       res.json({ message: 'User added to chat successfully' });
+      return;
     } catch (error) {
       console.error('Error adding user to chat:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -315,9 +332,11 @@ export class ChatController {
       await pool.query(removeQuery, [chatId, userId]);
       
       res.json({ message: 'User removed from chat successfully' });
+      return;
     } catch (error) {
       console.error('Error removing user from chat:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 }

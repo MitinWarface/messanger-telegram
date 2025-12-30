@@ -21,14 +21,17 @@ export class AuthController {
       
       if (success) {
         res.json({ message: 'SMS code sent successfully' });
+        return;
       } else {
         res.status(500).json({ error: 'Failed to send SMS code' });
+        return;
       }
     } catch (error) {
       console.error('Error sending SMS code:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-  }
+   }
 
   async verifySMSCode(req: Request, res: Response) {
     try {
@@ -47,14 +50,17 @@ export class AuthController {
           token: authResult.token,
           refreshToken: authResult.refreshToken
         });
+        return;
       } else {
         res.status(401).json({ error: 'Invalid SMS code' });
+        return;
       }
     } catch (error) {
       console.error('Error verifying SMS code:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-  }
+    }
 
   async refreshToken(req: Request, res: Response) {
     try {
@@ -68,12 +74,15 @@ export class AuthController {
       
       if (newToken) {
         res.json({ token: newToken });
+        return;
       } else {
         res.status(401).json({ error: 'Invalid refresh token' });
+        return;
       }
     } catch (error) {
       console.error('Error refreshing token:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -86,9 +95,11 @@ export class AuthController {
       }
       
       res.json(user);
+      return;
     } catch (error) {
       console.error('Error getting user profile:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 
@@ -108,9 +119,11 @@ export class AuthController {
       });
       
       res.json(updatedUser);
+      return;
     } catch (error) {
       console.error('Error updating user profile:', error);
       res.status(500).json({ error: 'Internal server error' });
+      return;
     }
   }
 }

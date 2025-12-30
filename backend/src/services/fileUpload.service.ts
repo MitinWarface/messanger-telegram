@@ -90,6 +90,7 @@ export class FileUploadService {
         return res.status(400).json({ error: err.message });
       }
       next();
+      return;
     });
  };
 
@@ -108,6 +109,7 @@ export class FileUploadService {
         return res.status(400).json({ error: err.message });
       }
       next();
+      return;
     });
   };
 
