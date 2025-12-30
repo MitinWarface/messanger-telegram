@@ -19,7 +19,14 @@ export async function initializeDatabase() {
 }
 
 // Initialize the database when this module is run directly
-if (require.main === module) {
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Check if this module is run directly
+if (process.argv[1] === __filename) {
   initializeDatabase()
     .then(() => {
       console.log('Database initialization completed');
