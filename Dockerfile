@@ -39,11 +39,10 @@ RUN npm ci --no-audit --no-fund --ignore-scripts
 COPY frontend/tsconfig.json ./
 COPY frontend/vite.config.ts ./
 COPY frontend/src ./src
+COPY frontend/index.html ./
 
-# Создаем необходимые директории и файлы если они не существуют
-RUN mkdir -p src/assets/css && \
-    echo '@tailwind base;@tailwind components;@tailwind utilities;' > src/assets/css/tailwind.css && \
-    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Telegram Web Clone</title></head><body><div id="app"></div><script type="module" src="/src/main.ts"></script></body></html>' > ../index.html
+# Копируем файлы с правильной разметкой
+COPY frontend/src/assets/css/tailwind.css ./src/assets/css/
 
 # Исправляем проблему с разметкой в ChatView.vue
 RUN sed -i 's/<\/div>\n        <div v-else/<\/div>\n        <\/div>\n        <div v-else/g' src/views/ChatView.vue
