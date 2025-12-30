@@ -24,7 +24,7 @@ export default defineConfig({
       },
     },
   },
- build: {
+  build: {
     outDir: '../dist/frontend',
     emptyOutDir: true,
     rollupOptions: {
