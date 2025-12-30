@@ -12,8 +12,6 @@ RUN npm ci --only=production --no-audit --no-fund || echo "No root dependencies 
 
 # Копируем остальные файлы проекта
 COPY . .
-COPY frontend/package.json ./frontend/
-COPY frontend/package-lock.json ./frontend/
 
 # Устанавливаем зависимости для backend и собираем его
 WORKDIR /app/backend
@@ -49,7 +47,7 @@ COPY frontend/src/assets/css/tailwind.css ./src/assets/css/
 # Исправляем проблему с разметкой в ChatView.vue
 RUN sed -i 's/<\/div>\n        <div v-else/<\/div>\n        <\/div>\n        <div v-else/g' src/views/ChatView.vue
 
-RUN npm run build && ls -la dist/
+RUN npm run build
 
 # Убедимся, что собранные frontend файлы доступны из правильного места
 # Возвращаемся в корневую директорию
