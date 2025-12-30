@@ -33,7 +33,8 @@ RUN npm run build
 WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
-RUN npm ci --no-audit --no-fund --ignore-scripts && npm run build
+RUN npm ci --no-audit --no-fund --ignore-scripts
+RUN npm run build
 
 # Возвращаемся в корневую директорию
 WORKDIR /app
