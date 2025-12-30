@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for Telegram Web Clone",
   "main": "dist/server.js",
+  "type": "module",
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
