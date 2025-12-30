@@ -34,8 +34,13 @@ WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
 RUN npm ci --no-audit --no-fund --ignore-scripts
+# Копируем исходные файлы frontend перед сборкой
+COPY frontend/tsconfig.json ./
+COPY frontend/vite.config.ts ./
+COPY frontend/src ./src
 RUN npm run build
 
+# Убедимся, что собранные frontend файлы доступны из правильного места
 # Возвращаемся в корневую директорию
 WORKDIR /app
 
