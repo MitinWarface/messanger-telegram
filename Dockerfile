@@ -33,6 +33,7 @@ RUN npm run build
 WORKDIR /app/frontend
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
+RUN cat package.json && npm run build
 RUN npm ci --no-audit --no-fund --ignore-scripts
 
 # Копируем исходные файлы frontend перед сборкой
@@ -47,7 +48,7 @@ COPY frontend/src/assets/css/tailwind.css ./src/assets/css/
 # Исправляем проблему с разметкой в ChatView.vue
 RUN sed -i 's/<\/div>\n        <div v-else/<\/div>\n        <\/div>\n        <div v-else/g' src/views/ChatView.vue
 
-RUN cat package.json | grep -A 20 "scripts" && npm run build
+RUN npm run build
 
 # Убедимся, что собранные frontend файлы доступны из правильного места
 # Возвращаемся в корневую директорию
