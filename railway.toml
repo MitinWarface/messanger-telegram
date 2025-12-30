@@ -35,5 +35,5 @@ name = "uploads-volume"
 mountPath = "/data/uploads"
 
 [[services.backend.ports]]
-- port = 3000
-  httpPath = "/"
+port = "3000"
+httpPath = "/"
